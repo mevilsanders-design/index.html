@@ -37,10 +37,10 @@ document.querySelectorAll('aside nav a').forEach(link => {
   });
 });
 
-// --- КЛИЕНТЫ (СПИСОК И ДЕТАЛИ) ---
+// --- КЛИЕНТЫ ---
 function renderClients() {
   const list = document.getElementById('clients-list');
-  const search = document.getElementById('client-search').value.toLowerCase();
+  const search = (document.getElementById('client-search')?.value || '').toLowerCase();
   list.innerHTML = '';
 
   clients
@@ -48,7 +48,8 @@ function renderClients() {
     .forEach(c => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td><strong>${c.name}</strong></
+        <td><strong>${c.name}</strong></td>
+        <td>${c.
         <td>${c.store || '-'}</td>
         <td>${c.direction || '-'}</td>
         <td>
@@ -398,30 +399,25 @@ document.getElementById('new-order-form').addEventListener('submit', e => {
 
   const client = clients.find
   const client = clients.find(c => c.id == clientId);
+  if (!client) { alert('Клиент не найден'); return; }
+
   const date = document.getElementById('order-date').value;
   const status = document.getElementById('order-status').value;
 
-  const itemsContainer = document.getElementById('order-items');
-  const rows = itemsContainer.querySelectorAll('.item-row');
   const items = [];
   let total = 0;
 
-  rows.forEach(row => {
-    const productName = row.querySelector('.product-search').value.trim();
+  document.querySelectorAll('.item-row').forEach(row => {
+    const productName = row.querySelector('.product-search').value;
     const qtyInput = row.querySelector('.item-qty');
-    const priceEl = row.querySelector('.item-price');
+    const priceText = row.querySelector('.item-price').textContent;
+    const totalText = row.querySelector('.item-total').textContent;
 
-    if (!productName) return;
+    if (!productName || !qtyInput.value || priceText === '—') return;
 
-    const qty = parseInt(qtyInput.value) || 1;
-    let price = parseFloat(priceEl.textContent.replace(' ₽', '')) || 0;
-    if (price === 0) {
-      const prod = products.find(p => p.name.toLowerCase() === productName.toLowerCase());
-      if (prod) price = prod.price;
-    }
-
+    const qty = parseInt(qtyInput.value);
+    const price = parseFloat(priceText.replace(' ₽', ''));
     const lineTotal = price * qty;
-    total += lineTotal;
 
     items.push({
       productName,
@@ -429,19 +425,20 @@ document.getElementById('new-order-form').addEventListener('submit', e => {
       price,
       lineTotal
     });
+    total += lineTotal;
   });
 
   if (items.length === 0) {
-    alert('Добавьте хотя бы один товар в заказ');
+    alert('Добавьте хотя бы одну позицию в заказ');
     return;
   }
 
   const newOrder = {
     id: Date.now(),
-    clientId,
+    clientId: client.id,
     clientName: client.name,
-    storeName: client.store,
-    clientDirection: client.direction,
+    storeName: client.store || '',
+    clientDirection: client.direction || '',
     date,
     status,
     items,
@@ -452,6 +449,7 @@ document.getElementById('new-order-form').addEventListener('submit', e => {
   saveData();
 
   alert('Заказ сохранён!');
-  renderNewOrderForm();
+  document.getElementById('new-order-form').reset();
+  renderNewOrderForm(); // сбросит форму и добавит одну пустую строку
   renderOrders();
 });
