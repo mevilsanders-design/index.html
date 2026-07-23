@@ -395,11 +395,16 @@ document.getElementById('new-order-form').addEventListener('submit', e => {
   e.preventDefault();
 
   const clientId = document.getElementById('order-client-select').value;
-  if (!clientId) { alert('Выберите клиента'); return; }
+  if (!clientId) {
+    alert('Выберите клиента');
+    return;
+  }
 
-  const client = clients.find
   const client = clients.find(c => c.id == clientId);
-  if (!client) { alert('Клиент не найден'); return; }
+  if (!client) {
+    alert('Клиент не найден');
+    return;
+  }
 
   const date = document.getElementById('order-date').value;
   const status = document.getElementById('order-status').value;
@@ -411,11 +416,10 @@ document.getElementById('new-order-form').addEventListener('submit', e => {
     const productName = row.querySelector('.product-search').value;
     const qtyInput = row.querySelector('.item-qty');
     const priceText = row.querySelector('.item-price').textContent;
-    const totalText = row.querySelector('.item-total').textContent;
 
     if (!productName || !qtyInput.value || priceText === '—') return;
 
-    const qty = parseInt(qtyInput.value);
+    const qty = parseInt(qtyInput.value, 10);
     const price = parseFloat(priceText.replace(' ₽', ''));
     const lineTotal = price * qty;
 
@@ -450,6 +454,7 @@ document.getElementById('new-order-form').addEventListener('submit', e => {
 
   alert('Заказ сохранён!');
   document.getElementById('new-order-form').reset();
-  renderNewOrderForm(); // сбросит форму и добавит одну пустую строку
+  renderNewOrderForm();
   renderOrders();
 });
+
