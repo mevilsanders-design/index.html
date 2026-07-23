@@ -10,21 +10,24 @@ body {
   min-height: 100vh;
 }
 
+/* Базовые стили сайдбара */
 .sidebar {
   width: 220px;
   background: #2c3e50;
   color: #fff;
   padding: 1rem;
   flex-shrink: 0;
+  position: relative;
+  transition: transform 0.3s ease;
 }
 
-.sidebar h3 { margin: 0 0 1.5rem; }
+.sidebar h3 { margin: 0 0 1rem; }
 
 .sidebar nav a {
   display: block;
   color: #bdc3c7;
   text-decoration: none;
-  padding: 0.8rem 0;
+  padding: 0.75rem 0;
   border-radius: 6px;
 }
 
@@ -33,10 +36,47 @@ body {
   color: #fff;
 }
 
-.main-content {
-  flex: 1;
-  padding: 1.5rem;
-  overflow-y: auto;
+/* Кнопка гамбургера */
+#toggle-menu {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 10;
+}
+
+/* Скрываем меню на мобильных */
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    padding: 1rem;
+    transform: translateY(-110%); /* скрыто сверху */
+  }
+
+  .sidebar.open {
+    transform: translateY(0);
+  }
+
+  .main-content {
+    width: 100%;
+    min-height: auto;
+  }
+
+  /* затемнение фона */
+  .overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    z-index: 9;
+  }
+  .overlay.active {
+    display: block;
+  }
 }
 
 .view { display: none; }
