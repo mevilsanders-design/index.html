@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CRM: Сбор заказов</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-container">
+    <!-- Боковая панель -->
+    <aside class="sidebar">
+      <h3>CRM</h3>
+      <nav>
+        <a href="#" data-view="clients" class="active">Клиенты</a>
+        <a href="#" data-view="orders">Заказы</a>
+        <a href="#" data-view="calendar">Календарь</a>
+        <a href="#" data-view="new-order">Новый заказ</a>
+      </nav>
+    </aside>
+
+    <!-- Основной контент -->
+    <main class="main-content">
+      <!-- Клиенты -->
+      <div id="view-clients" class="view active">
+        <h2>Клиентская база</h2>
+        <div class="controls">
+          <input type="text" id="client-search" placeholder="Поиск по клиентам..." />
+          <button id="btn-add-client">+ Добавить клиента</button>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Клиент</th>
+              <th>Магазин/сеть</th>
+              <th>Адрес/точка</th>
+              <th>Телефон</th>
+              <th>Действия</th>
+            </tr>
+          </thead>
+          <tbody id="clients-list"></tbody>
+        </table>
+      </div>
+
+      <!-- Заказы -->
+      <div id="view-orders" class="view">
+        <h2>Заказы</h2>
+        <div class="controls">
+          <input type="text" id="order-search" placeholder="Поиск заказов (клиент, номер)..." />
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Дата</th>
+              <th>Клиент/Магазин</th>
+              <th>Сумма</th>
+              <th>Статус</th>
+              <th>Действия</th>
+            </tr>
+          </thead>
+          <tbody id="orders-list"></tbody>
+        </table>
+      </div>
+
+      <!-- Календарь -->
+      <div id="view-calendar" class="view">
+        <h2>Календарь: сводка по дням</h2>
+        <div id="calendar-summary"></div>
+      </div>
+
+      <!-- Новый заказ -->
+      <div id="view-new-order" class="view">
+        <h2>Новый заказ</h2>
+        <form id="new-order-form">
+          <div class="form-row">
+            <label>Клиент</label>
+            <select id="order-client-select"></select>
+          </div>
+          <div class="form-row">
+            <label>Дата заказа</label>
+            <input type="date" id="order-date" required />
+          </div>
+          <div class="form-row">
+            <label>Статус</label>
+            <select id="order-status">
+              <option value="Новый">Новый</option>
+              <option value="В работе">В работе</option>
+              <option value="Выполнен">Выполнен</option>
+            </select>
+          </div>
+          <h3>Состав заказа</h3>
+          <div class="order-items-container" id="order-items"></div>
+          <div class="controls" style="margin-top:1rem;">
+            <button type="button" id="btn-add-item">+ Добавить позицию</button>
+            <button type="submit" class="btn-primary">Сохранить заказ</button>
+          </div>
+        </form>
+      </div>
+    </main>
+  </div>
+
+  <!-- Модальное окно деталей заказа -->
+  <div id="order-details-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeOrderDetails()">&times;</span>
+      <h3 id="modal-order-title">Детали заказа</h3>
+      <div id="modal-order-body"></div>
+    </div>
+  </div>
+
+  <!-- Модальное окно добавления клиента -->
+  <div id="client-modal" class="modal">
+    <div class="modal-content modal-wide">
+      <span class="close-modal" onclick="closeClientModal()">&times;</span>
+      <h3>Добавить/редактировать клиента</h3>
+      <form id="client-form">
+        <input type="hidden" id="client-id" />
+        <div class="form-row">
+          <label>Название клиента</label>
+          <input type="text" id="client-name" required />
+        </div>
+        <div class="form-row">
+          <label>Сеть/магазин</label>
+          <input type="text" id="client-store" />
+        </div>
+        <div class="form-row">
+          <label>Точка/адрес</label>
+          <input type="text" id="client-point" />
+        </div>
+        <div class="form-row">
+          <label>Телефон</label>
+          <input type="tel" id="client-phone" />
+        </div>
+        <button type="submit" class="btn-primary">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
