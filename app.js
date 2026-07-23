@@ -38,8 +38,14 @@ function saveData() {
 document.querySelectorAll('aside nav a').forEach(link => {
   link.addEventListener('click', e => {
     e.preventDefault();
+
+    // закрываем мобильное меню при клике
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
     document.querySelectorAll('aside nav a').forEach(a => a.classList.remove('active'));
+
     const viewId = 'view-' + link.dataset.view;
     document.getElementById(viewId).classList.add('active');
     link.classList.add('active');
