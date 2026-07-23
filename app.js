@@ -1,4 +1,18 @@
 // --- ИНИЦИАЛИЗАЦИЯ ДАННЫХ ---
+// Мобильное меню
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+const toggleBtn = document.getElementById('toggle-menu');
+
+toggleBtn.addEventListener('click', () => {
+  sidebar.classList.toggle('open');
+  overlay.classList.add('active');
+});
+
+overlay.addEventListener('click', () => {
+  sidebar.classList.remove('open');
+  overlay.classList.remove('active');
+});
 let clients = JSON.parse(localStorage.getItem('crm_clients')) || [];
 let orders = JSON.parse(localStorage.getItem('crm_orders')) || [];
 const products = [
