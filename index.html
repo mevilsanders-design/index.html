@@ -8,15 +8,17 @@
 </head>
 <body>
   <div class="app-container">
-    <aside class="sidebar">
-      <h3>CRM</h3>
-      <nav>
-        <a href="#" data-view="clients" class="active">Клиенты</a>
-        <a href="#" data-view="orders">Заказы</a>
-        <a href="#" data-view="calendar">Календарь</a>
-        <a href="#" data-view="new-order">Новый заказ</a>
-      </nav>
-    </aside>
+    <aside class="sidebar" id="sidebar">
+  <h3>CRM</h3>
+  <button id="toggle-menu" aria-label="Открыть меню" style="background:none; border:none; color:#fff; font-size:1.2rem; cursor:pointer; padding:0.5rem;">☰</button>
+
+  <nav id="nav-links">
+    <a href="#" data-view="clients" class="active">Клиенты</a>
+    <a href="#" data-view="orders">Заказы</a>
+    <a href="#" data-view="calendar">Календарь</a>
+    <a href="#" data-view="new-order">Новый заказ</a>
+  </nav>
+</aside>
 
     <main class="main-content">
       <!-- Клиенты -->
@@ -165,5 +167,6 @@
   </div>
 
   <script src="app.js"></script>
+  <div id="overlay" class="overlay"></div>
 </body>
 </html>
