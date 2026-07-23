@@ -44,12 +44,15 @@ function renderClients() {
   list.innerHTML = '';
 
   clients
-    .filter(c => c.name.toLowerCase().includes(search) || (c.store && c.store.toLowerCase().includes(search)) || (c.direction && c.direction.toLowerCase().includes(search)))
+    .filter(c =>
+      c.name.toLowerCase().includes(search) ||
+      (c.store && c.store.toLowerCase().includes(search)) ||
+      (c.direction && c.direction.toLowerCase().includes(search))
+    )
     .forEach(c => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
         <td><strong>${c.name}</strong></td>
-        <td>${c.
         <td>${c.store || '-'}</td>
         <td>${c.direction || '-'}</td>
         <td>
